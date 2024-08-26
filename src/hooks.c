@@ -6,7 +6,7 @@
 /*   By: cgray <cgray@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:30:52 by cgray             #+#    #+#             */
-/*   Updated: 2024/01/31 15:05:03 by cgray            ###   ########.fr       */
+/*   Updated: 2024/08/26 11:13:49 by cgray            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,23 +32,17 @@ mlx_scrollfunc	zoom_scroll_hook(double xdelta, double ydelta, void *param)
 /* Hooks for WASD to shift map */
 void	key_shift(mlx_key_data_t keydata, t_fdf *data)
 {
-	if (keydata.key == MLX_KEY_A
-		&& (keydata.action == MLX_REPEAT || keydata.action == MLX_PRESS))
+	if (mlx_is_key_down(data->mlx_ptr, MLX_KEY_A))
 		data->shift_x -= 20;
-	if (keydata.key == MLX_KEY_D
-		&& (keydata.action == MLX_REPEAT || keydata.action == MLX_PRESS))
+	if (mlx_is_key_down(data->mlx_ptr, MLX_KEY_D))
 		data->shift_x += 20;
-	if (keydata.key == MLX_KEY_W
-		&& (keydata.action == MLX_REPEAT || keydata.action == MLX_PRESS))
+	if (mlx_is_key_down(data->mlx_ptr, MLX_KEY_W))
 		data->shift_y -= 20;
-	if (keydata.key == MLX_KEY_S
-		&& (keydata.action == MLX_REPEAT || keydata.action == MLX_PRESS))
+	if (mlx_is_key_down(data->mlx_ptr, MLX_KEY_S))
 		data->shift_y += 20;
-	if (keydata.key == MLX_KEY_MINUS
-		&& (keydata.action == MLX_REPEAT || keydata.action == MLX_PRESS))
+	if (mlx_is_key_down(data->mlx_ptr, MLX_KEY_MINUS))
 		data->z_mod += .1;
-	if (keydata.key == MLX_KEY_EQUAL
-		&& (keydata.action == MLX_REPEAT || keydata.action == MLX_PRESS))
+	if (mlx_is_key_down(data->mlx_ptr, MLX_KEY_EQUAL))
 		data->z_mod -= .1;
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 	{
@@ -105,23 +99,17 @@ mlx_keyfunc	key_hook_fdf(mlx_key_data_t keydata, void *param)
 	t_fdf	*data;
 
 	data = (t_fdf *)param;
-	if (keydata.key == MLX_KEY_KP_5
-		&& (keydata.action == MLX_REPEAT || keydata.action == MLX_PRESS))
+	if (mlx_is_key_down(data->mlx_ptr, MLX_KEY_KP_5))
 		data->rotate_x -= rad(5);
-	if (keydata.key == MLX_KEY_KP_8
-		&& (keydata.action == MLX_REPEAT || keydata.action == MLX_PRESS))
+	if (mlx_is_key_down(data->mlx_ptr, MLX_KEY_KP_8))
 		data->rotate_x += rad(5);
-	if (keydata.key == MLX_KEY_KP_4
-		&& (keydata.action == MLX_REPEAT || keydata.action == MLX_PRESS))
+	if (mlx_is_key_down(data->mlx_ptr, MLX_KEY_KP_4))
 		data->rotate_y -= rad(5);
-	if (keydata.key == MLX_KEY_KP_6
-		&& (keydata.action == MLX_REPEAT || keydata.action == MLX_PRESS))
+	if (mlx_is_key_down(data->mlx_ptr, MLX_KEY_KP_6))
 		data->rotate_y += rad(5);
-	if (keydata.key == MLX_KEY_KP_7
-		&& (keydata.action == MLX_REPEAT || keydata.action == MLX_PRESS))
+	if (mlx_is_key_down(data->mlx_ptr, MLX_KEY_KP_7))
 		data->rotate_z -= rad(5);
-	if (keydata.key == MLX_KEY_KP_9
-		&& (keydata.action == MLX_REPEAT || keydata.action == MLX_PRESS))
+	if (mlx_is_key_down(data->mlx_ptr, MLX_KEY_KP_9))
 		data->rotate_z += rad(5);
 	call_keys(keydata, data);
 	data_limits(data);

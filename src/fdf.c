@@ -6,7 +6,7 @@
 /*   By: cgray <cgray@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 11:55:02 by cgray             #+#    #+#             */
-/*   Updated: 2024/02/02 17:30:45 by cgray            ###   ########.fr       */
+/*   Updated: 2024/08/26 11:05:51 by cgray            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int	main(int argc, char **argv)
 		draw(data);
 		mlx_scroll_hook(data->mlx_ptr, (void *)zoom_scroll_hook, (void *)data);
 		mlx_key_hook(data->mlx_ptr, (void *)key_hook_fdf, (void *)data);
+		mlx_image_to_window(data->mlx_ptr, data->img_ptr, 0, 0);
 		mlx_loop(data->mlx_ptr);
 		mlx_terminate(data->mlx_ptr);
 		free_fdf(data);
