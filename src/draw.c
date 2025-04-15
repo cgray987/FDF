@@ -29,18 +29,40 @@ t_3d_vector	transform(t_3d_vector p, t_fdf *data)
 	return (p);
 }
 
-/* given two sets of coords, find fastest way to draw from one to the other.
-before drawing:
-	-find corresponding z altitude/color
-	-project coords based selected projection
-		-zoom and shift handled in projections
-*/
-void	bresenham(t_3d_vector vec, t_3d_vector vec1, t_fdf *data)
+void	draw_loop(t_3d_vector vec, t_3d_vector vec1, t_fdf *data)
 {
 	float		x_step;
 	float		y_step;
-	float		max;
+	int			max;
+	int			stop;
 	t_3d_vector	start;
+
+	x_step = vec1.x - vec.x;
+	y_step = vec1.y - vec.y;
+	max = ft_max(ft_abs(x_step), ft_abs(y_step));
+	x_step /= max;
+	y_step /= max;
+	stop = 0;
+	start = vec;
+	while (((int)(vec.x - vec1.x) || (int)(vec.y - vec1.y)) && stop < 2000)
+	{
+		if ((vec.x > 0 && vec.y > 0) && (vec.x < WIDTH && vec.y < HEIGHT))
+			mlx_put_pixel(data->img_ptr, vec.x, vec.y,
+				grad_pt(start, vec1, vec));
+		vec.x += x_step;
+		vec.y += y_step;
+		stop++;
+	}
+}
+
+/* given two sets of coords, find fastest way to draw from one to the other.
+before drawing:
+    -find corresponding z altitude/color
+    -project coords based selected projection
+        -zoom and shift handled in projections
+*/
+void	bresenham(t_3d_vector vec, t_3d_vector vec1, t_fdf *data)
+{
 
 	vec.z = (float)data->z_matrix[(int)vec.y][(int)vec.x];
 	vec1.z = (float)data->z_matrix[(int)vec1.y][(int)vec1.x];
@@ -48,25 +70,12 @@ void	bresenham(t_3d_vector vec, t_3d_vector vec1, t_fdf *data)
 	vec1.color = get_color(vec1, data);
 	vec = transform(vec, data);
 	vec1 = transform(vec1, data);
-	x_step = vec1.x - vec.x;
-	y_step = vec1.y - vec.y;
-	max = ft_max(ft_abs(x_step), ft_abs(y_step));
-	x_step /= max;
-	y_step /= max;
-	start = vec;
-	while ((int)(vec.x - vec1.x) || (int)(vec.y - vec1.y))
-	{
-		if ((vec.x > 0 && vec.y > 0) && (vec.x < WIDTH && vec.y < HEIGHT))
-			mlx_put_pixel(data->img_ptr, vec.x, vec.y,
-				grad_pt(start, vec1, vec));
-		vec.x += x_step;
-		vec.y += y_step;
-	}
+	draw_loop(vec, vec1, data);
 }
 
 /* iterate through map values
-	uses bresenham's alg to draw lines between points
-	put image to window, call menu
+    uses bresenham's alg to draw lines between points
+    put image to window, call menu
  */
 void	draw(t_fdf *data)
 {

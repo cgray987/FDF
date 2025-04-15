@@ -200,7 +200,8 @@ int				merge_color(int r, int g, int b, int a);
 /* ------------------------grad.c------------------------------ */
 uint32_t		grad_pt(t_3d_vector start, t_3d_vector end, t_3d_vector curr);
 uint32_t		grad_pt_color(uint32_t a, uint32_t b, float position);
-float			get_position(t_3d_vector start, t_3d_vector end, t_3d_vector curr);
+float			get_position(t_3d_vector start,
+					t_3d_vector end, t_3d_vector curr);
 
 /* ------------------------hooks.c------------------------------ */
 void			menu_hook(t_fdf *data);
